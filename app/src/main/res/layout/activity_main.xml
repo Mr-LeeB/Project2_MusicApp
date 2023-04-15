@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_clear"
         android:layout_width="30dp"
         android:layout_height="40dp"
         app:srcCompat="@android:drawable/arrow_down_float" />
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/img_listMusic"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_toEndOf="@+id/img_clear"
         android:paddingLeft="10dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -121,11 +121,11 @@
             app:srcCompat="@android:drawable/ic_media_previous" />
 
         <ImageView
-            android:id="@+id/img_play"
+            android:id="@+id/img_play_or_pause"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@drawable/ic_play_main" />
 
         <ImageView
             android:id="@+id/img_next"
@@ -134,5 +134,4 @@
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_media_next" />
     </LinearLayout>
-
 </RelativeLayout>

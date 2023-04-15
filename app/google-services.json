@@ -15,7 +15,65 @@
       },
       "oauth_client": [
         {
-          "client_id": "967030411858-4kvlvls6f65dub4t1cl5m35ffou5aaeq.apps.googleusercontent.com",
+          "client_id": "967030411858-ifpagnskuij1e8mth49sf3o4nkqj8kpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF0f6Wt_vMwznNhuz7hCB3RltxdKaez6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967030411858-4kvlvls6f65dub4t1cl5m35ffou5aaeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967030411858:android:d33e28cae48c76fa2bc58b",
+        "android_client_info": {
+          "package_name": "hcmute.edu.vn.playsongfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967030411858-ifpagnskuij1e8mth49sf3o4nkqj8kpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF0f6Wt_vMwznNhuz7hCB3RltxdKaez6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967030411858-4kvlvls6f65dub4t1cl5m35ffou5aaeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967030411858:android:d712957b251f1a4f2bc58b",
+        "android_client_info": {
+          "package_name": "hcmute.edu.vn.project2_musicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967030411858-ifpagnskuij1e8mth49sf3o4nkqj8kpe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

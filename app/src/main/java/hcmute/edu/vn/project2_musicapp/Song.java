@@ -1,50 +1,52 @@
-package hcmute.edu.vn.foregroundservice;
+package hcmute.edu.vn.project2_musicapp;
 
 import java.io.Serializable;
 
 public class Song implements Serializable {
 
-    private String title;
-    private String single;
-    private int image;
-    private int resouce;
+    private String nameMusic;
+    private String nameSinger;
+    private String image;
+    private String resouce;
 
-    public Song(String title, String single, int image, int resouce) {
-        this.title = title;
-        this.single = single;
+    public Song() {
+    }
+
+    public Song(String nameMusic, String nameSinger, String image, String resouce) {
+        this.nameMusic = nameMusic;
+        this.nameSinger = nameSinger;
         this.image = image;
         this.resouce = resouce;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNameMusic() {
+        return nameMusic;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNameMusic(String nameMusic) {
+        this.nameMusic = nameMusic;
     }
 
-    public String getSingle() {
-        return single;
+    public String getNameSinger() {
+        return nameSinger;
     }
 
-    public void setSingle(String single) {
-        this.single = single;
+    public void setNameSinger(String nameSinger) {
+        this.nameSinger = nameSinger;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public int getResouce() {
+    public String getResouce() {
         return resouce;
     }
-
-    public void setResouce(int resouce) {
+    public void setResouce(String resouce) {
         this.resouce = resouce;
     }
 }

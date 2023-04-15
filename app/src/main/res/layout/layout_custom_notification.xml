@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_title_song"
+            android:id="@+id/txt_nameMusic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -29,7 +29,7 @@
             android:textSize="14sp"/>
 
         <TextView
-            android:id="@+id/tv_single_song"
+            android:id="@+id/txt_nameSinger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
