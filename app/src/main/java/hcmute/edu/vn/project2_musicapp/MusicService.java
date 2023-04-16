@@ -62,7 +62,6 @@ public class MusicService extends Service {
 
     private void startMusic(Song song) {
         if(mediaPlayer == null) {
-//            mediaPlayer = MediaPlayer.create(getApplicationContext(), song.getResouce());
             try{
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setDataSource(song.getResouce());
@@ -73,12 +72,12 @@ public class MusicService extends Service {
                     }
                 });
                 mediaPlayer.prepare();
+
             }
             catch (IOException e){
                 e.printStackTrace();
             }
         }
-//        mediaPlayer.start();
         isplaying = true;
         sendActionToActivity(ACTION_START);
     }

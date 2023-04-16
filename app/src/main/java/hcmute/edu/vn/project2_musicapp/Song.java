@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
 
+    private int id;
     private String nameMusic;
     private String nameSinger;
     private String image;
@@ -12,11 +13,20 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(String nameMusic, String nameSinger, String image, String resouce) {
+    public Song(int id, String nameMusic, String nameSinger, String image, String resouce) {
+        this.id = id;
         this.nameMusic = nameMusic;
         this.nameSinger = nameSinger;
         this.image = image;
         this.resouce = resouce;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNameMusic() {

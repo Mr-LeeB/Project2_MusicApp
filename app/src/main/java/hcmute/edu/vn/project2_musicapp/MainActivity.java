@@ -18,7 +18,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView imgSong, imgPlayOrPause, imgClear, imglistMusic;
+    private ImageView imgSong, imgPlayOrPause, imgClear, imglistMusic, imgnext, imgprevious;
     private TextView tvTitleSong, tvSingleSong;
 
     private Song mSong;
@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         imgClear = findViewById(R.id.img_clear);
         imglistMusic = findViewById(R.id.img_listMusic);
 
+        imgnext = findViewById(R.id.img_next);
+        imgprevious = findViewById(R.id.img_previous);
+
         tvTitleSong = findViewById(R.id.txt_nameMusic);
         tvSingleSong = findViewById(R.id.txt_nameSinger);
 
@@ -67,6 +70,21 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Stop service");
             clickStopService();
         }
+
+
+        imgnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        imgprevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         clickStartService(song);
     }
@@ -80,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void clickStartService(Song song){
         if (song == null) {
-            song = new Song("Cuối Cùng Thì", "Jack", "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80", "https://firebasestorage.googleapis.com/v0/b/fa-faw.appspot.com/o/Waiting%20For%20You.mp3?alt=media&token=01d1cd94-0654-4b23-b700-c0b6ad69e107");
+            song = new Song(1,"Cuối Cùng Thì", "Jack", "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80", "https://firebasestorage.googleapis.com/v0/b/fa-faw.appspot.com/o/Waiting%20For%20You.mp3?alt=media&token=01d1cd94-0654-4b23-b700-c0b6ad69e107");
         }
         Intent intent = new Intent(this, MusicService.class);
         Bundle bundle = new Bundle();
@@ -116,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 setStatusButtonPlayOrPause();
                 break;
             case MusicService.ACTION_CLEAR:
+                setStatusButtonPlayOrPause();
                 break;
         }
     }

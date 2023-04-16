@@ -36,7 +36,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
         Song song = mListSongs.get(position);
         if(song == null)
             return;
-        holder.numMusic.setText("1");
+        holder.numMusic.setText(String.valueOf(song.getId()));
         holder.nameMusicInList.setText(song.getNameMusic());
         holder.nameSingerInList.setText(song.getNameSinger());
 

@@ -91,9 +91,7 @@ public class ActivityListMusic extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Song song = dataSnapshot.getValue(Song.class);
                     mListSong.add(song);
-                    System.out.println("here is song: " + song);
                 }
-
                 musicListAdapter.notifyDataSetChanged();
             }
 
