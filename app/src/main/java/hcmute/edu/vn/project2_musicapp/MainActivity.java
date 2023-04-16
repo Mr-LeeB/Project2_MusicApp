@@ -5,17 +5,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imgSong, imgPlayOrPause, imgClear, imglistMusic, imgnext, imgprevious;
@@ -23,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Song mSong;
     private Boolean isPlaying;
+
+    private List<Song> mListSong;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -58,35 +72,55 @@ public class MainActivity extends AppCompatActivity {
         imgClear = findViewById(R.id.img_clear);
         imglistMusic = findViewById(R.id.img_listMusic);
 
+        mListSong = new ArrayList<>();
+
         imgnext = findViewById(R.id.img_next);
         imgprevious = findViewById(R.id.img_previous);
 
         tvTitleSong = findViewById(R.id.txt_nameMusic);
         tvSingleSong = findViewById(R.id.txt_nameSinger);
 
+        getListSongFromRealTimeDatabase();
+
         Song song = playMusicSelectedFromList();
 
         if (song != null) {
             System.out.println("Stop service");
             clickStopService();
+            clickStartService(song);
         }
-
-
-        imgnext.setOnClickListener(new View.OnClickListener() {
+        openListMusic();
+        imgPlayOrPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                clickStartService(song);
             }
         });
+    }
 
-        imgprevious.setOnClickListener(new View.OnClickListener() {
+    private void getListSongFromRealTimeDatabase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("List-Songs");
+
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                if (mListSong != null)
+                    mListSong.clear();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Song song = dataSnapshot.getValue(Song.class);
+                    mListSong.add(song);
+                }
+                System.out.println("List Song: "+ mListSong);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Get List Song Faild", Toast.LENGTH_SHORT).show();
             }
         });
-
-        clickStartService(song);
     }
 
     private Song playMusicSelectedFromList(){
@@ -98,7 +132,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void clickStartService(Song song){
         if (song == null) {
-            song = new Song(1,"Cuối Cùng Thì", "Jack", "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&w=1000&q=80", "https://firebasestorage.googleapis.com/v0/b/fa-faw.appspot.com/o/Waiting%20For%20You.mp3?alt=media&token=01d1cd94-0654-4b23-b700-c0b6ad69e107");
+            Song selectSong = mListSong.get(0);
+            song = new Song(selectSong.getId(),
+                    selectSong.getNameMusic(),
+                    selectSong.getNameSinger(),
+                    selectSong.getImage(),
+                    selectSong.getResouce());
         }
         Intent intent = new Intent(this, MusicService.class);
         Bundle bundle = new Bundle();
@@ -108,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         mSong = song;
 
         startService(intent);
+
     }
 
     private void clickStopService(){
@@ -125,16 +165,16 @@ public class MainActivity extends AppCompatActivity {
         switch (action){
             case MusicService.ACTION_START:
                 showInfoSong();
-                setStatusButtonPlayOrPause();
+                setStatusButtonPlayOrPause(action);
                 break;
             case MusicService.ACTION_PAUSE:
-                setStatusButtonPlayOrPause();
+                setStatusButtonPlayOrPause(action);
                 break;
             case MusicService.ACTION_RESUME:
-                setStatusButtonPlayOrPause();
+                setStatusButtonPlayOrPause(action);
                 break;
             case MusicService.ACTION_CLEAR:
-                setStatusButtonPlayOrPause();
+                setStatusButtonPlayOrPause(action);
                 break;
         }
     }
@@ -173,24 +213,60 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        openListMusic();
+        imgnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSong != null) {
+                    int id = mSong.getId();
+                    if (id == mListSong.size())
+                        id = 0;
+                    mSong = mListSong.get(id);
+                    clickStopService();
+                    clickStartService(mSong);
+                }
+            }
+        });
+
+        imgprevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSong != null) {
+                    int id = mSong.getId() - 2;
+                    if (id < 0)
+                        id = mListSong.size() - 1;
+                    mSong = mListSong.get(id);
+                    clickStopService();
+                    clickStartService(mSong);
+                }
+            }
+        });
+    }
+
+    private void openListMusic() {
         imglistMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityListMusic.class);
-                intent.putExtra("nameMusic",mSong.getNameMusic());
-                intent.putExtra("nameSinger", mSong.getNameSinger());
+                Bundle bundle = new Bundle();
 
-                System.out.println(mSong.getNameMusic());
+                if (mSong != null) {
+                    intent.putExtra("nameMusic", mSong.getNameMusic());
+                    intent.putExtra("nameSinger", mSong.getNameSinger());
+                }
                 launcher.launch(intent);
             }
         });
     }
 
-    private void setStatusButtonPlayOrPause(){
+    private void setStatusButtonPlayOrPause(int action){
         if(isPlaying) {
             imgPlayOrPause.setImageResource(R.drawable.ic_pause_main);
         } else {
             imgPlayOrPause.setImageResource(R.drawable.ic_play_main);
+        }
+        if (action == 3) {
+            clickStartService(mSong);
         }
     }
 

@@ -54,6 +54,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.Musi
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
     @Override
     public int getItemCount() {
         if(mListSongs!=null)

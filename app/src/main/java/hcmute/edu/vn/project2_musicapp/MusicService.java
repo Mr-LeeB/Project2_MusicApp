@@ -92,6 +92,7 @@ public class MusicService extends Service {
                 break;
             case ACTION_CLEAR:
                 stopSelf();
+                isplaying = false;
                 sendActionToActivity(ACTION_CLEAR);
                 break;
         }
@@ -172,6 +173,5 @@ public class MusicService extends Service {
         intent.putExtras(bundle);
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
     }
 }
