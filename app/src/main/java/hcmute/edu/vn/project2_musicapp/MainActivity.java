@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isPlaying;
 
     private List<Song> mListSong;
+    private int action = -1;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             mSong = (Song) bundle.get("object_song");
             isPlaying = bundle.getBoolean("status_player");
             int actionMusic = bundle.getInt("action_music");
-
             handleLayoutMusic(actionMusic);
         }
     };
@@ -168,16 +168,17 @@ public class MainActivity extends AppCompatActivity {
         switch (action){
             case MusicService.ACTION_START:
                 showInfoSong();
-                setStatusButtonPlayOrPause(action);
+                setStatusButtonPlayOrPause();
                 break;
             case MusicService.ACTION_PAUSE:
-                setStatusButtonPlayOrPause(action);
+                setStatusButtonPlayOrPause();
                 break;
             case MusicService.ACTION_RESUME:
-                setStatusButtonPlayOrPause(action);
+                setStatusButtonPlayOrPause();
                 break;
             case MusicService.ACTION_CLEAR:
-                setStatusButtonPlayOrPause(action);
+                this.action = action;
+                setStatusButtonPlayOrPause();
                 break;
         }
     }
@@ -205,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     sendActionToService(MusicService.ACTION_RESUME);
                 }
+                if (action == MusicService.ACTION_CLEAR) {
+                    clickStartService(mSong);
+                    System.out.println("this song: " + mSong.getNameMusic());
+                }
             }
         });
 
@@ -212,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 imgPlayOrPause.setImageResource(R.drawable.ic_play_main);
-                mSong = null;
-                isPlaying = false;
+//                mSong = null;
+//                isPlaying = false;
                 sendActionToService(MusicService.ACTION_CLEAR);
                 clickStopService();
             }
@@ -265,14 +270,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setStatusButtonPlayOrPause(int action){
+    private void setStatusButtonPlayOrPause(){
         if(isPlaying) {
             imgPlayOrPause.setImageResource(R.drawable.ic_pause_main);
         } else {
             imgPlayOrPause.setImageResource(R.drawable.ic_play_main);
-        }
-        if (action == 3) {
-            clickStartService(mSong);
         }
     }
 
