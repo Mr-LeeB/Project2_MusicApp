@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (action == MusicService.ACTION_CLEAR) {
                     clickStartService(mSong);
-                    System.out.println("this song: " + mSong.getNameMusic());
+                    action = -1;
                 }
             }
         });
