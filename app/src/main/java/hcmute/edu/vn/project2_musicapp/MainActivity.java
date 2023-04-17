@@ -65,9 +65,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.println("ĐAng được chạy ở đây");
+
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("send_data_to_activity"));
 
         imgSong = findViewById(R.id.img_singer);
+        setImgSinger("https://firebasestorage.googleapis.com/v0/b/fa-faw.appspot.com/o/music.jpg?alt=media&token=5a238469-7272-4dbf-bb22-9269ad62862e");
+
         imgPlayOrPause = findViewById(R.id.img_play_or_pause);
         imgClear = findViewById(R.id.img_clear);
         imglistMusic = findViewById(R.id.img_listMusic);
@@ -113,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     Song song = dataSnapshot.getValue(Song.class);
                     mListSong.add(song);
                 }
-                System.out.println("List Song: "+ mListSong);
             }
 
             @Override
@@ -209,7 +212,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 imgPlayOrPause.setImageResource(R.drawable.ic_play_main);
+                mSong = null;
+                isPlaying = false;
                 sendActionToService(MusicService.ACTION_CLEAR);
+                clickStopService();
             }
         });
 

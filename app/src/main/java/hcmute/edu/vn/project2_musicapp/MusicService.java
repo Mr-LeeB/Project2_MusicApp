@@ -59,7 +59,6 @@ public class MusicService extends Service {
 
         return START_NOT_STICKY;
     }
-
     private void startMusic(Song song) {
         if(mediaPlayer == null) {
             try{
@@ -117,7 +116,7 @@ public class MusicService extends Service {
     }
     private void sendNotification(Song song) {
         Intent intent = new Intent(this, MusicService.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_music);
 
@@ -151,7 +150,7 @@ public class MusicService extends Service {
     private PendingIntent getPendingIntent(Context context, int action){
         Intent intent = new Intent(this, MyReceiver.class);
         intent.putExtra("action_music", action);
-        return PendingIntent.getBroadcast(context.getApplicationContext(),action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context.getApplicationContext(),action, intent, PendingIntent.FLAG_MUTABLE);
     }
     @Override
     public void onDestroy() {
