@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Song mSong;
     private Boolean isPlaying;
-
     private List<Song> mListSong;
     private int action = -1;
 
@@ -64,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        System.out.println("ĐAng được chạy ở đây");
 
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter("send_data_to_activity"));
 
@@ -143,8 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     selectSong.getResouce());
         }
         Intent intent = new Intent(this, MusicService.class);
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("object_song", song);
+
         intent.putExtras(bundle);
 
         mSong = song;
@@ -217,8 +216,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 imgPlayOrPause.setImageResource(R.drawable.ic_play_main);
-//                mSong = null;
-//                isPlaying = false;
+
                 sendActionToService(MusicService.ACTION_CLEAR);
                 clickStopService();
             }
@@ -259,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityListMusic.class);
-                Bundle bundle = new Bundle();
+//                Bundle bundle = new Bundle();
 
                 if (mSong != null) {
                     intent.putExtra("nameMusic", mSong.getNameMusic());

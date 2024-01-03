@@ -114,6 +114,7 @@ public class MusicService extends Service {
             sendActionToActivity(ACTION_RESUME);
         }
     }
+
     private void sendNotification(Song song) {
         Intent intent = new Intent(this, MusicService.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);

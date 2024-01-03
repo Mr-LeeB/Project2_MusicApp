@@ -93,7 +93,6 @@ public class ActivityListMusic extends AppCompatActivity {
                     mListSong.add(song);
                 }
                 musicListAdapter.notifyDataSetChanged();
-//                System.out.println("List Song: "+ mListSong.get(1).getNameMusic());
             }
 
             @Override
@@ -102,5 +101,4 @@ public class ActivityListMusic extends AppCompatActivity {
             }
         });
     }
-
 }
